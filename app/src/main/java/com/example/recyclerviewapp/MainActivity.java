@@ -1,7 +1,8 @@
 package com.example.recyclerviewapp;
 
-
 import android.os.Bundle;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,24 +15,30 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private ItemAdapter itemAdapter;
     private List<Item> itemList;
+    private ItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        Button addButton = findViewById(R.id.add_button);
 
-        // Заполнение списка данными
+        // Инициализация списка
         itemList = new ArrayList<>();
-        itemList.add(new Item("Item 1", "Description for Item 1", R.drawable.image1));
-        itemList.add(new Item("Item 2", "Description for Item 2", R.drawable.image2));
+        itemList.add(new Item("Элемент 1", "Описание 1", R.drawable.item1));
+        itemList.add(new Item("Элемент 2", "Описание 2", R.drawable.item2));
 
-        itemAdapter = new ItemAdapter(itemList);
-        recyclerView.setAdapter(itemAdapter);
+        adapter = new ItemAdapter(this, itemList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+        // Обработчик клика кнопки
+        addButton.setOnClickListener(v -> {
+            itemList.add(new Item("Новый элемент", "Новое описание", R.drawable.item1));
+            adapter.notifyItemInserted(itemList.size() - 1);
+        });
     }
 }
