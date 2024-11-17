@@ -5,14 +5,14 @@ public class Item {
     private String description;
     private int imageResource;
 
-    // Конструктор
+
     public Item(String title, String description, int imageResource) {
         this.title = title;
         this.description = description;
         this.imageResource = imageResource;
     }
 
-    // Геттеры
+
     public String getTitle() {
         return title;
     }
